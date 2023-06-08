@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Speech API Example</title>
+    <link href="index.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="screen" id="tablet">
+        <div class="img">
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid" id='7' onClick="getTech('15','7')"></div>
+            <div class="grid" id='8' onblur="getTech('15','8')"></div>
+            <div class="grid" id='9' onblur="getTech('15','9')"></div>
+        </div>
+        <button onClick='turnTabletOn()' class="button"></button>
+
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+    <script>
+        var turned = false;
+        var tooltipOn = false;
+        var actualEl = null;
+        function getTech(tech, e) {
+            tooltipOn = !tooltipOn
+            //tooltip.innerHTML = `<img src="${tech}.svg" alt="Imagen">`;
+            if (tooltipOn && actualEl !== e) {
+                const elem = document.getElementById(e);
+                let rect = elem.getBoundingClientRect();
+                console.log(rect)
+                tooltip.innerHTML = `<p style="color:'white';">design</p>`
+                const tooltip = document.getElementById('tooltip');
+                tooltip.style.top = rect.top - 30 + 'px';
+                tooltip.style.left = rect.left + 40 + 'px';
+                tooltip.style.display = 'block';
+            } else {
+                tooltip.style.display = 'none';
+                actualEl = e;
+            }
+        }
+        function turnTabletOn() {
+            turned = !turned
+            var grosor = document.getElementById('grosor');
+            if (turned) {
+                var tablet = document.getElementById('tablet');
+                var grids = document.getElementsByClassName('grid');
+                tablet.classList.add('perspective');
+
+                for (let i = 0; i < grids.length; i++) {
+                    grids[i].classList.add('screenOn');
+                }
+            }
+            else {
+                var tablet = document.getElementById('tablet');
+                var grids = document.getElementsByClassName('grid');
+                for (let i = 0; i < grids.length; i++) {
+                    grids[i].classList.remove('screenOn');
+                }
+                tablet.classList.remove('perspective');
+            }
+        }
+    </script>
+</body>
+
+</html>
